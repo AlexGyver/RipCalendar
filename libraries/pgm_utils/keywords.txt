@@ -1,0 +1,41 @@
+#######################################
+# Syntax Coloring Map For pgm_utils
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+pgm_utils	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+FPSTR	KEYWORD2
+PGM_VAL	KEYWORD2
+PGM_STRUCT	KEYWORD2
+PGM_STR	KEYWORD2
+PGM_STR_LIST	KEYWORD2
+PGM_STR_LIST_OBJ	KEYWORD2
+MAKE_STR_LIST	KEYWORD2
+PGM_ARRAY	KEYWORD2
+PGM_ARRAY_LIST	KEYWORD2
+MAKE_ARRAY	KEYWORD2
+PGM_ARRAY_OBJ	KEYWORD2
+pgm_read	KEYWORD2
+
+length	KEYWORD2
+toStr	KEYWORD2
+toString	KEYWORD2
+compare	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+FSTR	LITERAL1
+Array	LITERAL1
+ArrayList	LITERAL1
+PString	LITERAL1
+StringList	LITERAL1
