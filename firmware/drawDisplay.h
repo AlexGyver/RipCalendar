@@ -5,14 +5,14 @@
 #include <Stamp.h>
 
 #include "db.h"
-#include "fonts/ubuntub_150.h"
-#include "fonts/ubuntuc_16.h"
-#include "fonts/ubuntum_18.h"
-#include "fonts/ubuntum_22.h"
+#include "src/fonts/ubuntub_150.h"
+#include "src/fonts/ubuntuc_16.h"
+#include "src/fonts/ubuntum_18.h"
+#include "src/fonts/ubuntum_22.h"
 #include "icons.h"
 #include "printer.h"
-#include "text/holidays.h"
-#include "text/lang.h"
+#include "src/text/holidays.h"
+#include "src/text/lang.h"
 #include "weather.h"
 
 void drawIcon(GyverGFX& gfx, int x, int y, uint8_t code) {
