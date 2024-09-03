@@ -329,9 +329,8 @@ class ServerBase {
     // обработать запрос
     void handleRequest(::Client& client, HeadersCollector* collector = nullptr) {
         String lineStr = client.readStringUntil('\n');
-        Text lineTxt(lineStr);
         Text lines[3];
-        size_t n = lineTxt.split(lines, 3, ' ');
+        size_t n = Text(lineStr).split(lines, 3, ' ');
         if (n != 3) return;
 
         HeadersParser headers(client, HS_HEADER_BUF_SIZE, collector);

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5x8 Editor</title>
+
+    <style>
+        body {
+            background-color: #232323;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .box {
+            display: block;
+            position: relative;
+            height: 10px;
+            width: 10px;
+            cursor: pointer;
+            margin: 0.5px;
+        }
+
+        .box input {
+            position: absolute;
+            opacity: 0;
+            height: 0;
+            width: 0;
+        }
+
+        .mark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 10px;
+            width: 10px;
+            background-color: #0d0d0d;
+            margin: 0.5px;
+        }
+
+        .box:hover input~.mark {
+            background-color: #414141;
+        }
+
+        .box input:checked~.mark {
+            background-color: #11a900;
+        }
+
+        .mark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        #main_cont {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .editor_cont {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 5px;
+        }
+
+        .editor_label {
+            background: #5d5d5d;
+            width: 100%;
+            text-align: center;
+        }
+
+        .editor_cols {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .editor_col {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .code_area {
+            font-family: 'Courier New', Courier, monospace;
+            display: inline-block;
+            max-width: 400px;
+            width: 100%;
+            background: #191919;
+            outline: none;
+            border: none;
+            color: #0d8100;
+            padding: 10px;
+            margin: 5px;
+            border-radius: 6px;
+        }
+
+        .code_area::-webkit-scrollbar {
+            width: 7px;
+            height: 7px;
+        }
+
+        .code_area::-webkit-scrollbar-track {
+            background: #0000;
+        }
+
+        .code_area::-webkit-scrollbar-thumb {
+            background: #0d8100;
+            border-radius: 4px;
+        }
+
+        .codes {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="codes">
+        <textarea id="code_input" class="code_area" rows="15" oninput="load_data(this.value)">Paste code here</textarea>
+        <textarea id="code_output" class="code_area" rows="15"></textarea>
+    </div>
+
+    <div id="main_cont" class="main_cont"></div>
+
+    <script>
+        const alphabet = "!\"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдежзийклмнопрстуфхцчшщъыьэюяЁё";
+        const map_size = 800;
+
+        function load_data(text) {
+            let data = [...text.matchAll(/0x../g)].map(x => parseInt(x[0]));
+            if (data.length != map_size) return;
+
+            let render = '';
+            for (let b = 0, ch = 0; b < data.length; b += 5, ch++) {
+                render += '<div class="editor_cont"><div class="editor_cols">';
+                for (let col = 0; col < 5; col++) {
+                    render += `<div class="editor_col">`;
+                    let byte = data[b + col];
+                    for (let bit = 0; bit < 8; bit++) {
+                        render += `
+                        <label class="box">
+                            <input type="checkbox" id="ch_${b + col}_${bit}" ${((byte >> bit) & 1) ? 'checked' : ''} onclick="update_out()">
+                            <span class="mark"></span>
+                        </label>`;
+                    }
+                    render += `</div>`;
+                }
+                render += `</div><label class="editor_label">${alphabet[ch]}</label></div>`;
+            }
+            main_cont.innerHTML += render;
+            update_out();
+        }
+
+        function update_out() {
+            let code = `#pragma once
+#include <Arduino.h>
+
+const uint8_t gfx_def_font[] PROGMEM = {
+`;
+
+            for (let char = 0; char < map_size / 5; char++) {
+                code += '    ';
+                for (let col = 0; col < 5; col++) {
+                    let byte = 0;
+                    for (let bit = 0; bit < 8; bit++) {
+                        byte >>= 1;
+                        if (document.getElementById(`ch_${char * 5 + col}_${bit}`).checked) {
+                            byte |= (1 << 7);
+                        }
+                    }
+                    code += `0x${byte.toString(16).padStart(2, 0)}, `;
+                }
+                code += ` // ${alphabet[char]} (${char})\n`;
+            }
+            code += '};'
+            code_output.innerHTML = code;
+        }
+    </script>
+</body>
+
+</html>

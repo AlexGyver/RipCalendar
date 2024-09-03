@@ -130,6 +130,9 @@ void flush();
 // тип контента (из хэдера Content-Type)
 Text type();
 
+// код ответа
+uint16_t code();
+
 // тело ответа (длина из хэдера Content-Length)
 StreamReader& body();
 

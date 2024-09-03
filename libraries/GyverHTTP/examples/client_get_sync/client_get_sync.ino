@@ -37,6 +37,7 @@ void setup() {
     if (http.request("/GyverLibs/GyverHub-example/main/project.json")) {
         ghttp::Client::Response resp = http.getResponse();
         if (resp) {
+            Serial.println(resp.code());
             Serial.println(resp.type());
             Serial.println(resp.body().length());
             Serial.println(resp.body());

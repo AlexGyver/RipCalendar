@@ -685,7 +685,7 @@ export default function decodeBson(b, codes = []) {
 
     try {
         let obj = JSON.parse(s);
-        if (bins.length) makeBins(obj);
+        makeBins(obj);
         return obj;
     } catch (e) {
         throw new Error("JSON error")

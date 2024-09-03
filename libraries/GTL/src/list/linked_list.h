@@ -72,6 +72,7 @@ class linked_list {
 
     // удалить
     void remove(list_node* node) {
+        if (!node) return;
         if (_last == node) {
             _last = _last->_prev;
         } else {
