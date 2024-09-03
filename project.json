@@ -8,7 +8,7 @@
       "chipFamily": "ESP8266",
       "parts": [
         {
-          "path": "https://github.com/AlexGyver/RipCalendar/releases/latest/download/firmware.bin",
+          "path": "https://raw.githubusercontent.com/AlexGyver/RipCalendar/main/bin/firmware.bin",
           "offset": 0
         }
       ]
