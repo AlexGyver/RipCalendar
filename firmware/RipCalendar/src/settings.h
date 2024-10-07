@@ -55,10 +55,10 @@ void build(sets::Builder& b) {
 
     if (b.Confirm("update"_h)) ota.update();
 
-    if (b.build().isAction()) {
-        switch (b.build().id()) {
+    if (b.build.isAction()) {
+        switch (b.build.id) {
             case kk::gmt:
-                NTP.setGMT(b.build().value());
+                NTP.setGMT(b.build.value);
                 break;
         }
     }
